@@ -37,6 +37,18 @@ function MyApp({ Component, pageProps }: AppProps) {
             scroll-behavior: smooth;
           }
 
+          h1,
+          h2,
+          h3,
+          h4,
+          h5,
+          h6 {
+            font-family: "Chivo", -apple-system, BlinkMacSystemFont, "Segoe UI",
+              Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+              sans-serif;
+            font-weight: 700;
+          }
+
           h1 {
             font-size: var(--fs-800);
           }
