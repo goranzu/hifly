@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ContainerStyled from "../components/styled/ContainerStyled";
 import * as mq from "../styles/mq";
+import * as colors from "../styles/colors";
 
 const IconButtonStyled = styled.button`
   display: flex;
@@ -18,32 +19,76 @@ const IconButtonStyled = styled.button`
   cursor: pointer;
 `;
 
-const headerNavItems: { name: string; href: string; hasDropdown?: boolean }[] =
-  [
-    {
-      name: "Gather",
-      href: "/",
-      hasDropdown: true,
-    },
-    {
-      name: "Homewares",
-      href: "/homewares",
-      hasDropdown: true,
-    },
-    {
-      name: "About",
-      href: "/about",
-    },
-    {
-      name: "Blog",
-      href: "/blog",
-    },
-  ];
+const headerNavItems: {
+  name: string;
+  href: string;
+  hasDropdown?: boolean;
+  dropdown?: { name: string; href: string }[];
+}[] = [
+  {
+    name: "Gather",
+    href: "/",
+    hasDropdown: true,
+    dropdown: [
+      {
+        name: "Purchase",
+        href: "/purchase",
+      },
+      {
+        name: "Accessories",
+        href: "/accesories",
+      },
+      {
+        name: "F.A.Q",
+        href: "/faq",
+      },
+    ],
+  },
+  {
+    name: "Homewares",
+    href: "/homewares",
+    hasDropdown: true,
+    dropdown: [
+      {
+        name: "View All",
+        href: "/all",
+      },
+      {
+        name: "Mugs",
+        href: "/mugs",
+      },
+      {
+        name: "Organizers",
+        href: "/organizers",
+      },
+      {
+        name: "Prints",
+        href: "/prints",
+      },
+    ],
+  },
+  {
+    name: "About",
+    href: "/about",
+  },
+  {
+    name: "Blog",
+    href: "/blog",
+  },
+];
 
 const HeaderLinkStyled = styled.a`
   text-decoration: none;
   color: inherit;
   padding: 0.5rem 1rem;
+`;
+
+const ListStyled = styled.ul`
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  list-style: none;
 `;
 
 const Home: NextPage = () => {
@@ -67,6 +112,7 @@ const Home: NextPage = () => {
             />
             {/* </a> */}
             <nav
+              aria-label="Main Navigation"
               css={{
                 display: "none",
                 [mq.mq_100]: {
@@ -75,39 +121,69 @@ const Home: NextPage = () => {
                 },
               }}
             >
-              {headerNavItems.map((item) => {
-                return (
-                  <Link href={item.href} passHref key={item.href}>
-                    {item.hasDropdown ? (
-                      <HeaderLinkStyled
-                        css={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "0.5rem",
-                        }}
-                      >
-                        {item.name}
-                        <svg
-                          aria-hidden
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                      </HeaderLinkStyled>
-                    ) : (
-                      <HeaderLinkStyled>{item.name}</HeaderLinkStyled>
-                    )}
-                  </Link>
-                );
-              })}
+              <ListStyled>
+                {headerNavItems.map((item) => {
+                  return (
+                    <li key={item.href} css={{ position: "relative" }}>
+                      <Link href={item.href} passHref>
+                        {item.hasDropdown ? (
+                          <>
+                            {" "}
+                            <HeaderLinkStyled
+                              css={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "0.5rem",
+                                cursor: "pointer",
+                              }}
+                              aria-haspopup
+                              aria-expanded="false"
+                            >
+                              {item.name}
+                              <svg
+                                aria-hidden
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                              </svg>
+                            </HeaderLinkStyled>
+                            <ListStyled
+                              css={{
+                                flexDirection: "column",
+                                alignItems: "start",
+                                position: "absolute",
+                                bottom: 0,
+                                left: 0,
+                                transform: "translateY(100%)",
+                                backgroundColor: colors.neutral__100,
+                                display: "none",
+                              }}
+                            >
+                              {item.dropdown?.map((item) => (
+                                <Link key={item.href} passHref href={item.href}>
+                                  <HeaderLinkStyled>
+                                    {item.name}
+                                  </HeaderLinkStyled>
+                                </Link>
+                              ))}
+                            </ListStyled>
+                          </>
+                        ) : (
+                          <HeaderLinkStyled>{item.name}</HeaderLinkStyled>
+                        )}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ListStyled>
             </nav>
           </div>
 
