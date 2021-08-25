@@ -5,6 +5,7 @@ import * as colors from "../styles/colors";
 
 import "modern-css-reset";
 import "nprogress/nprogress.css";
+import Header from "../components/Header";
 
 function MyApp({ Component, pageProps }: AppProps) {
   useNprogress();
@@ -89,7 +90,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           }
         `}
       />
-      <Component {...pageProps} />
+      <>
+        <Header />
+        <Component {...pageProps} />
+      </>
     </>
   );
 }
