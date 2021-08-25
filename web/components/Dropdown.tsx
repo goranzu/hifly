@@ -63,6 +63,7 @@ function DropDown({ items, name }: DropdownProps) {
           backgroundColor: colors.neutral__100,
           minWidth: "100%",
           visibility: isExpanded ? "visible" : "hidden",
+          zIndex: 100,
         }}
       >
         {items.map((item, i, arr) => {

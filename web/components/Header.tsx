@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
 import VisuallyHidden from "@reach/visually-hidden";
-import styled from "@emotion/styled";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -10,16 +9,7 @@ import * as mq from "../styles/mq";
 import ListStyled from "./styled/ListStyled";
 import HeaderLinkStyled from "./styled/HeaderLinkStyled";
 import DropDown from "./Dropdown";
-
-const IconButtonStyled = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.5rem;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-`;
+import IconButtonStyled from "./styled/IconButtonStyled";
 
 function Header() {
   return (
