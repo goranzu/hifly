@@ -1,7 +1,9 @@
 /** @jsxImportSource @emotion/react */
 
 import Dialog, { DialogOverlay } from "@reach/dialog";
+import { keyframes } from "@emotion/react";
 import type { NextPage } from "next";
+import Image from "next/image";
 import * as mq from "../styles/mq";
 import * as colors from "../styles/colors";
 import { useState } from "react";
@@ -9,6 +11,13 @@ import { useState } from "react";
 import "@reach/dialog/styles.css";
 import VisuallyHidden from "@reach/visually-hidden";
 import IconButtonStyled from "../components/styled/IconButtonStyled";
+import ContainerStyled from "../components/styled/ContainerStyled";
+
+const fadeIn = keyframes`
+    to {
+        opacity: 1;
+    }
+`;
 
 const Home: NextPage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -16,20 +25,23 @@ const Home: NextPage = () => {
   const closeModal = () => setShowModal(false);
   const openModal = () => setShowModal(true);
 
+  const animationDuration = 0.5;
+
+  const animation = `${fadeIn} ${animationDuration}s ease forwards`;
+
   return (
     <main>
       <Dialog
         isOpen={showModal}
         onDismiss={closeModal}
+        aria-label="youtube video"
         css={{
           zIndex: 200,
           height: "500px",
           width: "100%",
           maxWidth: "900px",
           position: "relative",
-          paddingTop: "3rem",
-          paddingLeft: 0,
-          paddingRight: 0,
+          padding: "3rem 0",
 
           [mq.mq_100]: {
             paddingLeft: "1rem",
@@ -66,7 +78,7 @@ const Home: NextPage = () => {
           allowFullScreen
         ></iframe>
       </Dialog>
-      <div
+      <section
         css={{
           height: "350px",
           width: "100vw",
@@ -155,8 +167,62 @@ const Home: NextPage = () => {
             <span>Watch the video</span>
           </button>
         </div>
-      </div>
-      <h1>Main</h1>
+      </section>
+      <ContainerStyled
+        css={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+          alignItems: "center",
+          justifyItems: "center",
+          gap: "2rem",
+          marginTop: "5rem",
+          marginBottom: "5rem",
+        }}
+      >
+        <Image
+          width="160"
+          height="55"
+          src="https://res.cloudinary.com/djxpd9whf/image/upload/v1629969063/hifly/logos/logo3_180x_gmwkoo.webp"
+          alt="example logo 1"
+          css={{
+            opacity: 0,
+            animation,
+          }}
+        />
+        <Image
+          width="160"
+          height="23"
+          src="https://res.cloudinary.com/djxpd9whf/image/upload/v1629969063/hifly/logos/logo2_180x_kjfpic.webp"
+          alt="example logo 2"
+          css={{
+            opacity: 0,
+            animation,
+            animationDelay: `${animationDuration * 0.3}s`,
+          }}
+        />
+        <Image
+          width="160"
+          height="111"
+          src="https://res.cloudinary.com/djxpd9whf/image/upload/v1629969063/hifly/logos/logo4_180x_gbg9eq.webp"
+          alt="example logo 1"
+          css={{
+            opacity: 0,
+            animation,
+            animationDelay: `${animationDuration * 0.6}s`,
+          }}
+        />
+        <Image
+          width="160"
+          height="73"
+          src="https://res.cloudinary.com/djxpd9whf/image/upload/v1629969063/hifly/logos/logo1_180x_bgj6ha.webp"
+          alt="example logo 1"
+          css={{
+            opacity: 0,
+            animation,
+            animationDelay: `${animationDuration * 0.9}s`,
+          }}
+        />
+      </ContainerStyled>
     </main>
   );
 };
