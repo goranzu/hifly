@@ -6,7 +6,7 @@ import type { NextPage } from "next";
 import Image from "next/image";
 import * as mq from "../styles/mq";
 import * as colors from "../styles/colors";
-import { useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 
 import "@reach/dialog/styles.css";
 import VisuallyHidden from "@reach/visually-hidden";
@@ -19,11 +19,44 @@ const fadeIn = keyframes`
     }
 `;
 
+function useIsVisible(ref: RefObject<HTMLElement>, rootMargin = "0px") {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { rootMargin },
+    );
+
+    const copy = ref.current;
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      observer.unobserve(copy!);
+    };
+  }, [ref, rootMargin]);
+
+  return isVisible;
+}
+
 const Home: NextPage = () => {
   const [showModal, setShowModal] = useState(false);
+  const divRef = useRef<HTMLDivElement>(null);
 
   const closeModal = () => setShowModal(false);
   const openModal = () => setShowModal(true);
+
+  const isSectionVisible = useIsVisible(divRef);
+
+  if (isSectionVisible && divRef.current) {
+    console.log(divRef.current.style.opacity);
+    divRef.current.style.opacity = "1";
+  }
 
   const animationDuration = 0.5;
 
@@ -223,13 +256,118 @@ const Home: NextPage = () => {
           }}
         />
       </ContainerStyled>
-      <div
-        css={{
-          margin: "20rem",
-        }}
-      >
-        <h1>HEllo</h1>
-      </div>
+      <section>
+        <ContainerStyled
+          ref={divRef}
+          css={{
+            display: "grid",
+            gap: "1.5rem",
+            opacity: 0,
+            transition: "opacity 0.1s linear",
+            [mq.mq_100]: {
+              gridTemplateColumns: "minmax(auto, 500px) 1fr",
+            },
+          }}
+        >
+          <Image
+            css={{ objectFit: "cover" }}
+            width="540px"
+            height="360px"
+            alt="organized desk"
+            src="https://res.cloudinary.com/djxpd9whf/image/upload/v1629998771/hifly/images/hero_2378e298-fa9e-47d2-b8bd-f4b4159eca6e_540x_uzg3q1.jpg"
+          />
+          <div
+            css={{
+              maxWidth: "500px",
+              marginLeft: "auto",
+              marginRight: "auto",
+              width: "90%",
+
+              [mq.mq_100]: {
+                alignSelf: "center",
+                justifySelf: "end",
+              },
+            }}
+          >
+            <p
+              css={{
+                textTransform: "uppercase",
+                letterSpacing: 2.5,
+              }}
+            >
+              An easy answer to
+            </p>
+            <h2>Desk decluttering</h2>
+            <p css={{ marginTop: ".5rem" }}>
+              Our desks are where our ideas come to life. The small change of
+              decluttering your desk with our Gather organization system will
+              work wonders for peace of mind and productivity.
+            </p>
+          </div>
+        </ContainerStyled>
+
+        <div css={{ backgroundColor: "gray", marginTop: "4rem" }}>
+          <div
+            css={{
+              // height: " 240px",
+              position: "relative",
+
+              width: "95%",
+              marginLeft: "auto",
+              marginRight: "auto",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              [mq.mq_100]: {
+                height: "650px",
+                display: "unset",
+                // width: "100%",
+              },
+            }}
+          >
+            <video
+              css={{
+                height: "100%",
+                width: "90%",
+                objectFit: "cover",
+                // maxHeight: "240px",
+                [mq.mq_100]: {
+                  maxWidth: "100%",
+                  height: "100%",
+                  //   maxHeight: "unset",
+                },
+              }}
+              src="/videos/lifestyle.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+            ></video>
+            <div
+              css={{
+                padding: "2rem",
+                backgroundColor: colors.neutral__100,
+                "* + *": {
+                  marginTop: "1rem",
+                },
+                [mq.mq_100]: {
+                  maxWidth: "400px",
+                  position: "absolute",
+                  left: "70px",
+                  top: "100px",
+                },
+              }}
+            >
+              <h2>Everything within reach.</h2>
+              <p>
+                Gather&apos;s modular system means there&apos;s a place for all
+                the desk accessories you frequently reach for. Pens, paper,
+                headphones, and more.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   );
 };
