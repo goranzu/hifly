@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
+import { useRef, useEffect, useState } from "react";
 import VisuallyHidden from "@reach/visually-hidden";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,10 +11,50 @@ import ListStyled from "./styled/ListStyled";
 import HeaderLinkStyled from "./styled/HeaderLinkStyled";
 import DropDown from "./Dropdown";
 import IconButtonStyled from "./styled/IconButtonStyled";
+import * as colors from "../styles/colors";
 
 function Header() {
+  const headerRef = useRef<HTMLElement>(null);
+  const [scrollHeight, setScrollHeight] = useState(0);
+
+  useEffect(() => {
+    function handleScroll(e: Event) {
+      setScrollHeight(window.pageYOffset);
+    }
+
+    if (headerRef.current) {
+      const height = headerRef.current.getBoundingClientRect().height;
+      const el = headerRef.current;
+      if (height + 50 < scrollHeight) {
+        el.style.transform = "translateY(100%)";
+        el.style.left = "0";
+        el.style.right = "0";
+        el.style.top = `-${height}px`;
+        el.style.position = "fixed";
+      } else {
+        el.style.position = "relative";
+        el.style.top = "0";
+        el.style.transform = "translateY(0)";
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrollHeight]);
+
   return (
-    <header css={{ padding: "1rem 0" }}>
+    <header
+      ref={headerRef}
+      css={{
+        padding: "1rem 0",
+        zIndex: 100,
+        backgroundColor: colors.neutral__100,
+        transition: "transform .2s linear",
+      }}
+    >
       <ContainerStyled
         css={{
           display: "flex",

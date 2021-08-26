@@ -223,6 +223,13 @@ const Home: NextPage = () => {
           }}
         />
       </ContainerStyled>
+      <div
+        css={{
+          margin: "20rem",
+        }}
+      >
+        <h1>HEllo</h1>
+      </div>
     </main>
   );
 };
