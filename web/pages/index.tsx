@@ -306,35 +306,31 @@ const Home: NextPage = () => {
           </div>
         </ContainerStyled>
 
-        <div css={{ backgroundColor: "gray", marginTop: "4rem" }}>
+        <div css={{ marginTop: "4rem", backgroundColor: "#dedfe1" }}>
           <div
             css={{
-              // height: " 240px",
               position: "relative",
 
-              width: "95%",
+              width: "100%",
               marginLeft: "auto",
               marginRight: "auto",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+
               [mq.mq_100]: {
-                height: "650px",
-                display: "unset",
-                // width: "100%",
+                height: "600px",
               },
             }}
           >
             <video
               css={{
                 height: "100%",
-                width: "90%",
+                width: "100%",
                 objectFit: "cover",
-                // maxHeight: "240px",
                 [mq.mq_100]: {
                   maxWidth: "100%",
                   height: "100%",
-                  //   maxHeight: "unset",
                 },
               }}
               src="/videos/lifestyle.mp4"
@@ -347,14 +343,20 @@ const Home: NextPage = () => {
               css={{
                 padding: "2rem",
                 backgroundColor: colors.neutral__100,
+                width: "95%",
+                position: "relative",
+                marginTop: "-0.5rem",
                 "* + *": {
                   marginTop: "1rem",
                 },
+
                 [mq.mq_100]: {
                   maxWidth: "400px",
                   position: "absolute",
                   left: "70px",
                   top: "100px",
+                  opacity: 0,
+                  animation: `${fadeIn} 1s forwards`,
                 },
               }}
             >
