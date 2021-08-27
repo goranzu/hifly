@@ -1,15 +1,19 @@
 /** @jsxImportSource @emotion/react */
 
-import Dialog, { DialogOverlay } from "@reach/dialog";
+import { RefObject, useEffect, useRef, useState } from "react";
+import VisuallyHidden from "@reach/visually-hidden";
+import Dialog from "@reach/dialog";
+import Slider from "react-slick";
 import { keyframes } from "@emotion/react";
 import type { NextPage } from "next";
 import Image from "next/image";
 import * as mq from "../styles/mq";
 import * as colors from "../styles/colors";
-import { RefObject, useEffect, useRef, useState } from "react";
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import "@reach/dialog/styles.css";
-import VisuallyHidden from "@reach/visually-hidden";
 import IconButtonStyled from "../components/styled/IconButtonStyled";
 import ContainerStyled from "../components/styled/ContainerStyled";
 
@@ -369,6 +373,26 @@ const Home: NextPage = () => {
             </div>
           </div>
         </div>
+      </section>
+
+      <section>
+        <ContainerStyled>
+          <h2>Testimonials Slider</h2>
+          <Slider
+            {...{
+              dots: true,
+              infinite: false,
+              speed: 500,
+              slidesToShow: 1,
+              slidesToScroll: 1,
+            }}
+          >
+            <div>slide 1</div>
+            <div>slide 2</div>
+            <div>slide 3</div>
+            <div>slide 4</div>
+          </Slider>
+        </ContainerStyled>
       </section>
     </main>
   );
