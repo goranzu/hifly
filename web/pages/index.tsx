@@ -321,6 +321,9 @@ const Home: NextPage = () => {
             marginTop: "4rem",
             backgroundColor: "#dedfe1",
             paddingBottom: "1rem",
+            [mq.mq_100]: {
+              paddingBottom: 0,
+            },
           }}
         >
           <div
