@@ -4,6 +4,7 @@ import { RefObject, useEffect, useRef, useState } from "react";
 import VisuallyHidden from "@reach/visually-hidden";
 import Dialog from "@reach/dialog";
 import Slider from "react-slick";
+import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
 import type { NextPage } from "next";
 import Image from "next/image";
@@ -16,11 +17,16 @@ import "slick-carousel/slick/slick-theme.css";
 import "@reach/dialog/styles.css";
 import IconButtonStyled from "../components/styled/IconButtonStyled";
 import ContainerStyled from "../components/styled/ContainerStyled";
+import Testimonial from "../components/Testimonial";
 
 const fadeIn = keyframes`
     to {
         opacity: 1;
     }
+`;
+
+const PStyled = styled.p`
+  font-weight: 700;
 `;
 
 function useIsVisible(ref: RefObject<HTMLElement>, rootMargin = "0px") {
@@ -310,7 +316,13 @@ const Home: NextPage = () => {
           </div>
         </ContainerStyled>
 
-        <div css={{ marginTop: "4rem", backgroundColor: "#dedfe1" }}>
+        <div
+          css={{
+            marginTop: "4rem",
+            backgroundColor: "#dedfe1",
+            paddingBottom: "1rem",
+          }}
+        >
           <div
             css={{
               position: "relative",
@@ -375,22 +387,54 @@ const Home: NextPage = () => {
         </div>
       </section>
 
-      <section>
+      <section css={{ marginTop: "3rem" }}>
         <ContainerStyled>
-          <h2>Testimonials Slider</h2>
           <Slider
             {...{
               dots: true,
-              infinite: false,
+              infinite: true,
               speed: 500,
-              slidesToShow: 1,
+              slidesToShow: 3,
               slidesToScroll: 1,
+              responsive: [
+                {
+                  breakpoint: 590,
+                  settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                  },
+                },
+              ],
             }}
           >
-            <div>slide 1</div>
-            <div>slide 2</div>
-            <div>slide 3</div>
-            <div>slide 4</div>
+            <Testimonial>
+              <p>
+                Simply genius, my desk has never looked better. Beutiful
+                craftmanship too.
+              </p>
+              <PStyled>Gizmodo</PStyled>
+            </Testimonial>
+            <Testimonial>
+              <p>
+                I never realized what a distraction my cluttered desk was until
+                Gather fixed it.
+              </p>
+              <PStyled>Techcrunch</PStyled>
+            </Testimonial>
+            <Testimonial>
+              <p>
+                I can focus so much more easily now that I don&apos; have the
+                desk of a small child.
+              </p>
+              <PStyled>New York Times</PStyled>
+            </Testimonial>
+            <Testimonial>
+              <p>
+                A fantastic product. I&apos;m surprised how much more of a
+                difference it has made.
+              </p>
+              <PStyled>Elon Musk</PStyled>
+            </Testimonial>
           </Slider>
         </ContainerStyled>
       </section>
