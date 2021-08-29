@@ -16,31 +16,35 @@ import { useIsomorphicLayoutEffect } from "../lib/hooks/useIsomorphicLayoutEffec
 
 function Header() {
   const headerRef = useRef<HTMLElement>(null);
+  let headerHeight: undefined | number;
 
-  const handleScroll = useCallback(function handleScroll() {
-    const y = window.pageYOffset;
+  const handleScroll = useCallback(
+    function handleScroll() {
+      const y = window.pageYOffset;
 
-    if (y > 300) {
-      return;
-    }
-
-    if (headerRef.current) {
-      const headerHeight = headerRef.current?.getBoundingClientRect().height;
-      if (headerHeight + 50 < y) {
-        headerRef.current.style.transform = "translateY(100%)";
-        headerRef.current.style.left = "0";
-        headerRef.current.style.right = "0";
-        headerRef.current.style.top = `-${headerHeight}px`;
-        headerRef.current.style.position = "fixed";
-      } else if (headerHeight + 50 > y) {
-        headerRef.current.style.position = "relative";
-        headerRef.current.style.top = "0";
-        headerRef.current.style.transform = "translateY(0)";
+      if (y > 300) {
+        return;
       }
-    }
-  }, []);
+
+      if (headerRef.current && headerHeight != null) {
+        if (headerHeight + 50 < y) {
+          headerRef.current.style.transform = "translateY(100%)";
+          headerRef.current.style.left = "0";
+          headerRef.current.style.right = "0";
+          headerRef.current.style.top = `-${headerHeight}px`;
+          headerRef.current.style.position = "fixed";
+        } else if (headerHeight + 50 > y) {
+          headerRef.current.style.position = "relative";
+          headerRef.current.style.top = "0";
+          headerRef.current.style.transform = "translateY(0)";
+        }
+      }
+    },
+    [headerHeight],
+  );
 
   useIsomorphicLayoutEffect(() => {
+    headerHeight = headerRef.current?.getBoundingClientRect().height;
     window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
