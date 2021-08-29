@@ -1,18 +1,26 @@
 /** @jsxImportSource @emotion/react */
 
+import { CSSProperties } from "react";
+
 interface TestiomonialProps {
   children: React.ReactNode;
+  css?: CSSProperties;
+  isActive: boolean;
 }
 
-function Testimonial({ children }: TestiomonialProps) {
+function Testimonial({ children, css, isActive }: TestiomonialProps) {
   return (
     <blockquote
       css={{
         padding: "1rem",
 
+        // border: isActive ? "1px solid black" : 0,
+        // boxShadow: isActive ? "0 10px 10px rgb(0 0 0 / 10%)" : undefined,
+        // transform: isActive ? "scale(1)" : "unset",
         "@media(minWidth: 550px)": {
           padding: 0,
         },
+        // ...css,
       }}
     >
       <div
@@ -20,7 +28,9 @@ function Testimonial({ children }: TestiomonialProps) {
         css={{
           textAlign: "center",
           padding: "1.5rem 2rem",
-          transform: "scale(0.9)",
+          transform: isActive ? "scale(1)" : "scale(0.9)",
+          boxShadow: isActive ? "0 10px 10px rgb(0 0 0 / 10%)" : undefined,
+          // transform: isActive ? "scale(1)" : "unset",
           transition: "transform .2s linear",
 
           "* + *": {

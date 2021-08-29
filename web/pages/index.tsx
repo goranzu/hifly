@@ -10,7 +10,12 @@ import type { NextPage } from "next";
 import Image from "next/image";
 import * as mq from "../styles/mq";
 import * as colors from "../styles/colors";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper";
 
+import "swiper/css";
+// import "swiper/css/navigation";
+import "swiper/css/pagination";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -124,7 +129,7 @@ const Home: NextPage = () => {
       <section
         css={{
           height: "350px",
-          width: "100vw",
+          width: "100%",
           position: "relative",
 
           "&:before": {
@@ -392,6 +397,61 @@ const Home: NextPage = () => {
 
       <section css={{ marginTop: "3rem" }}>
         <ContainerStyled>
+          <Swiper
+            spaceBetween={30}
+            slidesPerView={3}
+            navigation={true}
+            pagination={{ clickable: true }}
+            modules={[Pagination]}
+            watchSlidesProgress={true}
+            centeredSlides={true}
+            loop={true}
+          >
+            <SwiperSlide>
+              {({ isActive }) => (
+                <Testimonial isActive={isActive}>
+                  <p>
+                    Simply genius, my desk has never looked better. Beutiful
+                    craftmanship too.
+                  </p>
+                  <PStyled>Gizmodo</PStyled>
+                </Testimonial>
+              )}
+            </SwiperSlide>
+            <SwiperSlide>
+              {({ isActive }) => (
+                <Testimonial isActive={isActive}>
+                  <p>
+                    I never realized what a distraction my cluttered desk was
+                    until Gather fixed it.
+                  </p>
+                  <PStyled>Techcrunch</PStyled>
+                </Testimonial>
+              )}
+            </SwiperSlide>
+            <SwiperSlide>
+              {({ isActive }) => (
+                <Testimonial isActive={isActive}>
+                  <p>
+                    I can focus so much more easily now that I don&apos; have
+                    the desk of a small child.
+                  </p>
+                  <PStyled>New York Times</PStyled>
+                </Testimonial>
+              )}
+            </SwiperSlide>
+            <SwiperSlide>
+              {({ isActive }) => (
+                <Testimonial isActive={isActive}>
+                  <p>
+                    A fantastic product. I&apos;m surprised how much more of a
+                    difference it has made.
+                  </p>
+                  <PStyled>Elon Musk</PStyled>
+                </Testimonial>
+              )}
+            </SwiperSlide>
+          </Swiper>
           <Slider
             {...{
               dots: true,
