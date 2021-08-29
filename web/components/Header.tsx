@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { useRef, useEffect, useState } from "react";
+import { useCallback, useRef } from "react";
 import VisuallyHidden from "@reach/visually-hidden";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,38 +12,39 @@ import HeaderLinkStyled from "./styled/HeaderLinkStyled";
 import DropDown from "./Dropdown";
 import IconButtonStyled from "./styled/IconButtonStyled";
 import * as colors from "../styles/colors";
+import { useIsomorphicLayoutEffect } from "../lib/hooks/useIsomorphicLayoutEffect";
 
 function Header() {
   const headerRef = useRef<HTMLElement>(null);
-  const [scrollHeight, setScrollHeight] = useState(0);
 
-  useEffect(() => {
-    function handleScroll(e: Event) {
-      setScrollHeight(window.pageYOffset);
+  const handleScroll = useCallback(function handleScroll() {
+    const y = window.pageYOffset;
+
+    if (y > 300) {
+      return;
     }
 
     if (headerRef.current) {
-      const height = headerRef.current.getBoundingClientRect().height;
-      const el = headerRef.current;
-      if (height + 50 < scrollHeight) {
-        el.style.transform = "translateY(100%)";
-        el.style.left = "0";
-        el.style.right = "0";
-        el.style.top = `-${height}px`;
-        el.style.position = "fixed";
-      } else {
-        el.style.position = "relative";
-        el.style.top = "0";
-        el.style.transform = "translateY(0)";
+      const headerHeight = headerRef.current?.getBoundingClientRect().height;
+      if (headerHeight + 50 < y) {
+        headerRef.current.style.transform = "translateY(100%)";
+        headerRef.current.style.left = "0";
+        headerRef.current.style.right = "0";
+        headerRef.current.style.top = `-${headerHeight}px`;
+        headerRef.current.style.position = "fixed";
+      } else if (headerHeight + 50 > y) {
+        headerRef.current.style.position = "relative";
+        headerRef.current.style.top = "0";
+        headerRef.current.style.transform = "translateY(0)";
       }
     }
+  }, []);
 
+  useIsomorphicLayoutEffect(() => {
     window.addEventListener("scroll", handleScroll);
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [scrollHeight]);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
 
   return (
     <header
