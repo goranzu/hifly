@@ -88,6 +88,11 @@ function MyApp({ Component, pageProps }: AppProps) {
             transform: scale(1);
           }
 
+          .custom-pagination {
+            text-align: center;
+            margin-top: 5px;
+          }
+
           @media (min-width: 800px) {
             :root {
               --base-size: 1.125rem;

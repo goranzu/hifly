@@ -8,19 +8,15 @@ interface TestiomonialProps {
   isActive: boolean;
 }
 
-function Testimonial({ children, css, isActive }: TestiomonialProps) {
+function Testimonial({ children, isActive }: TestiomonialProps) {
   return (
     <blockquote
       css={{
         padding: "1rem",
 
-        // border: isActive ? "1px solid black" : 0,
-        // boxShadow: isActive ? "0 10px 10px rgb(0 0 0 / 10%)" : undefined,
-        // transform: isActive ? "scale(1)" : "unset",
         "@media(minWidth: 550px)": {
           padding: 0,
         },
-        // ...css,
       }}
     >
       <div
@@ -29,8 +25,7 @@ function Testimonial({ children, css, isActive }: TestiomonialProps) {
           textAlign: "center",
           padding: "1.5rem 2rem",
           transform: isActive ? "scale(1)" : "scale(0.9)",
-          boxShadow: isActive ? "0 10px 10px rgb(0 0 0 / 10%)" : undefined,
-          // transform: isActive ? "scale(1)" : "unset",
+          boxShadow: isActive ? "0 10px 10px rgb(0 0 0 / 25%)" : undefined,
           transition: "transform .2s linear",
 
           "* + *": {
@@ -39,7 +34,6 @@ function Testimonial({ children, css, isActive }: TestiomonialProps) {
 
           "@media(minWidth: 550px)": {
             textAlign: "center",
-            //   padding: "1.5rem 2rem",
             transform: "scale(0.9)",
             transition: "transform .2s linear",
 

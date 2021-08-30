@@ -398,14 +398,28 @@ const Home: NextPage = () => {
       <section css={{ marginTop: "3rem" }}>
         <ContainerStyled>
           <Swiper
-            spaceBetween={30}
-            slidesPerView={3}
             navigation={true}
-            pagination={{ clickable: true }}
+            pagination={{
+              el: ".custom-pagination",
+              clickable: true,
+              renderBullet: (_, className) => {
+                return '<span class="' + className + '">' + "</span>";
+              },
+            }}
             modules={[Pagination]}
             watchSlidesProgress={true}
             centeredSlides={true}
             loop={true}
+            breakpoints={{
+              320: {
+                slidesPerView: 1,
+              },
+
+              700: {
+                slidesPerView: 3,
+                spaceBetween: 30,
+              },
+            }}
           >
             <SwiperSlide>
               {({ isActive }) => (
@@ -452,53 +466,7 @@ const Home: NextPage = () => {
               )}
             </SwiperSlide>
           </Swiper>
-          <Slider
-            {...{
-              dots: true,
-              infinite: true,
-              speed: 500,
-              slidesToShow: 3,
-              slidesToScroll: 1,
-              responsive: [
-                {
-                  breakpoint: 590,
-                  settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                  },
-                },
-              ],
-            }}
-          >
-            <Testimonial>
-              <p>
-                Simply genius, my desk has never looked better. Beutiful
-                craftmanship too.
-              </p>
-              <PStyled>Gizmodo</PStyled>
-            </Testimonial>
-            <Testimonial>
-              <p>
-                I never realized what a distraction my cluttered desk was until
-                Gather fixed it.
-              </p>
-              <PStyled>Techcrunch</PStyled>
-            </Testimonial>
-            <Testimonial>
-              <p>
-                I can focus so much more easily now that I don&apos; have the
-                desk of a small child.
-              </p>
-              <PStyled>New York Times</PStyled>
-            </Testimonial>
-            <Testimonial>
-              <p>
-                A fantastic product. I&apos;m surprised how much more of a
-                difference it has made.
-              </p>
-              <PStyled>Elon Musk</PStyled>
-            </Testimonial>
-          </Slider>
+          <div className="custom-pagination"></div>
         </ContainerStyled>
       </section>
     </main>
