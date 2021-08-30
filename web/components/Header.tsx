@@ -13,6 +13,7 @@ import DropDown from "./Dropdown";
 import IconButtonStyled from "./styled/IconButtonStyled";
 import * as colors from "../styles/colors";
 import { useIsomorphicLayoutEffect } from "../lib/hooks/useIsomorphicLayoutEffect";
+import { throttle } from "../lib/utils";
 
 function Header() {
   const headerRef = useRef<HTMLElement>(null);
@@ -22,7 +23,7 @@ function Header() {
     function handleScroll() {
       const y = window.pageYOffset;
 
-      if (y > 300) {
+      if (y > 500) {
         return;
       }
 
@@ -45,9 +46,9 @@ function Header() {
 
   useIsomorphicLayoutEffect(() => {
     headerHeight = headerRef.current?.getBoundingClientRect().height;
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", throttle(handleScroll));
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", throttle(handleScroll));
   }, [handleScroll]);
 
   return (
