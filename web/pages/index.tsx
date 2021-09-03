@@ -3,7 +3,6 @@
 import { RefObject, useEffect, useRef, useState } from "react";
 import VisuallyHidden from "@reach/visually-hidden";
 import Dialog from "@reach/dialog";
-import Slider from "react-slick";
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
 import type { NextPage } from "next";
@@ -14,10 +13,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
 
 import "swiper/css";
-// import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 import "@reach/dialog/styles.css";
 import IconButtonStyled from "../components/styled/IconButtonStyled";
@@ -396,78 +392,82 @@ const Home: NextPage = () => {
       </section>
 
       <section css={{ marginTop: "3rem" }}>
-        <ContainerStyled>
-          <Swiper
-            navigation={true}
-            pagination={{
-              el: ".custom-pagination",
-              clickable: true,
-              renderBullet: (_, className) => {
-                return '<span class="' + className + '">' + "</span>";
-              },
-            }}
-            modules={[Pagination]}
-            watchSlidesProgress={true}
-            centeredSlides={true}
-            loop={true}
-            breakpoints={{
-              320: {
-                slidesPerView: 1,
-              },
 
-              700: {
-                slidesPerView: 3,
-                spaceBetween: 30,
-              },
-            }}
-          >
-            <SwiperSlide>
-              {({ isActive }) => (
-                <Testimonial isActive={isActive}>
-                  <p>
-                    Simply genius, my desk has never looked better. Beutiful
-                    craftmanship too.
-                  </p>
-                  <PStyled>Gizmodo</PStyled>
-                </Testimonial>
-              )}
-            </SwiperSlide>
-            <SwiperSlide>
-              {({ isActive }) => (
-                <Testimonial isActive={isActive}>
-                  <p>
-                    I never realized what a distraction my cluttered desk was
-                    until Gather fixed it.
-                  </p>
-                  <PStyled>Techcrunch</PStyled>
-                </Testimonial>
-              )}
-            </SwiperSlide>
-            <SwiperSlide>
-              {({ isActive }) => (
-                <Testimonial isActive={isActive}>
-                  <p>
-                    I can focus so much more easily now that I don&apos; have
-                    the desk of a small child.
-                  </p>
-                  <PStyled>New York Times</PStyled>
-                </Testimonial>
-              )}
-            </SwiperSlide>
-            <SwiperSlide>
-              {({ isActive }) => (
-                <Testimonial isActive={isActive}>
-                  <p>
-                    A fantastic product. I&apos;m surprised how much more of a
-                    difference it has made.
-                  </p>
-                  <PStyled>Elon Musk</PStyled>
-                </Testimonial>
-              )}
-            </SwiperSlide>
-          </Swiper>
-          <div className="custom-pagination"></div>
-        </ContainerStyled>
+        <div css={{
+            maxWidth: "1900px",
+            marginLeft: "auto",
+            marginRight: "auto"
+        }}>
+            <Swiper
+              pagination={{
+                el: ".custom-pagination",
+                clickable: true,
+                renderBullet: (_, className) => {
+                  return '<span class="' + className + '">' + "</span>";
+                },
+              }}
+              modules={[Pagination]}
+              watchSlidesProgress={true}
+              centeredSlides={true}
+              loop={true}
+              breakpoints={{
+                320: {
+                  slidesPerView: 1,
+                },
+                700: {
+                  slidesPerView: 3,
+                  spaceBetween: 30,
+                },
+              }}
+            >
+              <SwiperSlide>
+                {({ isActive }) => (
+                  <Testimonial isActive={isActive}>
+                    <p>
+                      Simply genius, my desk has never looked better. Beutiful
+                      craftmanship too.
+                    </p>
+                    <PStyled>Gizmodo</PStyled>
+                  </Testimonial>
+                )}
+              </SwiperSlide>
+              <SwiperSlide>
+                {({ isActive }) => (
+                  <Testimonial isActive={isActive}>
+                    <p>
+                      I never realized what a distraction my cluttered desk was
+                      until Gather fixed it.
+                    </p>
+                    <PStyled>Techcrunch</PStyled>
+                  </Testimonial>
+                )}
+              </SwiperSlide>
+              <SwiperSlide>
+                {({ isActive }) => (
+                  <Testimonial isActive={isActive}>
+                    <p>
+                      I can focus so much more easily now that I don&apos; have
+                      the desk of a small child.
+                    </p>
+                    <PStyled>New York Times</PStyled>
+                  </Testimonial>
+                )}
+              </SwiperSlide>
+              <SwiperSlide>
+                {({ isActive }) => (
+                  <Testimonial isActive={isActive}>
+                    <p>
+                      A fantastic product. I&apos;m surprised how much more of a
+                      difference it has made.
+                    </p>
+                    <PStyled>Elon Musk</PStyled>
+                  </Testimonial>
+                )}
+              </SwiperSlide>
+            </Swiper>
+        </div>
+        <div className="custom-pagination"></div>
+
       </section>
     </main>
   );
