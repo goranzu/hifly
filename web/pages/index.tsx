@@ -392,82 +392,145 @@ const Home: NextPage = () => {
       </section>
 
       <section css={{ marginTop: "3rem" }}>
-
-        <div css={{
+        <div
+          css={{
             maxWidth: "1900px",
             marginLeft: "auto",
-            marginRight: "auto"
-        }}>
-            <Swiper
-              pagination={{
-                el: ".custom-pagination",
-                clickable: true,
-                renderBullet: (_, className) => {
-                  return '<span class="' + className + '">' + "</span>";
-                },
-              }}
-              modules={[Pagination]}
-              watchSlidesProgress={true}
-              centeredSlides={true}
-              loop={true}
-              breakpoints={{
-                320: {
-                  slidesPerView: 1,
-                },
-                700: {
-                  slidesPerView: 3,
-                  spaceBetween: 30,
-                },
-              }}
-            >
-              <SwiperSlide>
-                {({ isActive }) => (
-                  <Testimonial isActive={isActive}>
-                    <p>
-                      Simply genius, my desk has never looked better. Beutiful
-                      craftmanship too.
-                    </p>
-                    <PStyled>Gizmodo</PStyled>
-                  </Testimonial>
-                )}
-              </SwiperSlide>
-              <SwiperSlide>
-                {({ isActive }) => (
-                  <Testimonial isActive={isActive}>
-                    <p>
-                      I never realized what a distraction my cluttered desk was
-                      until Gather fixed it.
-                    </p>
-                    <PStyled>Techcrunch</PStyled>
-                  </Testimonial>
-                )}
-              </SwiperSlide>
-              <SwiperSlide>
-                {({ isActive }) => (
-                  <Testimonial isActive={isActive}>
-                    <p>
-                      I can focus so much more easily now that I don&apos; have
-                      the desk of a small child.
-                    </p>
-                    <PStyled>New York Times</PStyled>
-                  </Testimonial>
-                )}
-              </SwiperSlide>
-              <SwiperSlide>
-                {({ isActive }) => (
-                  <Testimonial isActive={isActive}>
-                    <p>
-                      A fantastic product. I&apos;m surprised how much more of a
-                      difference it has made.
-                    </p>
-                    <PStyled>Elon Musk</PStyled>
-                  </Testimonial>
-                )}
-              </SwiperSlide>
-            </Swiper>
+            marginRight: "auto",
+          }}
+        >
+          <Swiper
+            pagination={{
+              el: ".custom-pagination",
+              clickable: true,
+              renderBullet: (_, className) => {
+                return '<span class="' + className + '">' + "</span>";
+              },
+            }}
+            modules={[Pagination]}
+            watchSlidesProgress={true}
+            centeredSlides={true}
+            loop={true}
+            breakpoints={{
+              320: {
+                slidesPerView: 1,
+              },
+              700: {
+                slidesPerView: 3,
+                spaceBetween: 30,
+              },
+            }}
+          >
+            <SwiperSlide>
+              {({ isActive }) => (
+                <Testimonial isActive={isActive}>
+                  <p>
+                    Simply genius, my desk has never looked better. Beutiful
+                    craftmanship too.
+                  </p>
+                  <PStyled>Gizmodo</PStyled>
+                </Testimonial>
+              )}
+            </SwiperSlide>
+            <SwiperSlide>
+              {({ isActive }) => (
+                <Testimonial isActive={isActive}>
+                  <p>
+                    I never realized what a distraction my cluttered desk was
+                    until Gather fixed it.
+                  </p>
+                  <PStyled>Techcrunch</PStyled>
+                </Testimonial>
+              )}
+            </SwiperSlide>
+            <SwiperSlide>
+              {({ isActive }) => (
+                <Testimonial isActive={isActive}>
+                  <p>
+                    I can focus so much more easily now that I don&apos; have
+                    the desk of a small child.
+                  </p>
+                  <PStyled>New York Times</PStyled>
+                </Testimonial>
+              )}
+            </SwiperSlide>
+            <SwiperSlide>
+              {({ isActive }) => (
+                <Testimonial isActive={isActive}>
+                  <p>
+                    A fantastic product. I&apos;m surprised how much more of a
+                    difference it has made.
+                  </p>
+                  <PStyled>Elon Musk</PStyled>
+                </Testimonial>
+              )}
+            </SwiperSlide>
+          </Swiper>
         </div>
         <div className="custom-pagination"></div>
+      </section>
 
+      <section
+        css={{
+          marginTop: "3rem",
+          position: "relative",
+          height: "600px",
+          //   [mq.mq_100]: { height: "600px" },
+        }}
+      >
+        <div>
+          <Image
+            src="/images/kitchen_2400x.jpg"
+            width="2400"
+            height="3275"
+            alt="kitchen"
+            layout="fill"
+            css={{
+              objectFit: "cover",
+            }}
+          />
+        </div>
+        <div
+          css={{
+            backgroundColor: colors.neutral__100,
+            padding: "1rem 2rem",
+            position: "absolute",
+            left: "50%",
+            bottom: 30,
+            maxWidth: "575px",
+            transform: "translateX(-50%)",
+            width: "100%",
+
+            "* + *": {
+              marginTop: ".5rem",
+            },
+
+            [mq.mq_200]: {
+              transform: "unset",
+              left: "70px",
+              bottom: "unset",
+              top: "70px",
+              maxWidth: "380px",
+              padding: "3rem",
+            },
+          }}
+        >
+          <p
+            css={{
+              textDecoration: "none",
+              fontWeight: 300,
+              letterSpacing: 2,
+              textTransform: "uppercase",
+            }}
+          >
+            Lightweight
+          </p>
+          <h3>Bring it anywhere.</h3>
+          <p>
+            Gather isn&apos;t limited to your desk, take it to the kitchen and
+            create the perfect recipe and kitchen tool organizer.
+          </p>
+        </div>
       </section>
     </main>
   );
