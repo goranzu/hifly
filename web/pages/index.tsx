@@ -1,8 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { RefObject, useEffect, useRef, useState } from "react";
-import VisuallyHidden from "@reach/visually-hidden";
-import Dialog from "@reach/dialog";
+import { useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
 import type { NextPage } from "next";
@@ -16,44 +14,54 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 import "@reach/dialog/styles.css";
-import IconButtonStyled from "../components/styled/IconButtonStyled";
 import ContainerStyled from "../components/styled/ContainerStyled";
 import Testimonial from "../components/Testimonial";
+import useIsVisible from "../lib/hooks/useIsVisible";
+import Modal from "../components/Modal";
 
 const fadeIn = keyframes`
-    to {
-        opacity: 1;
-    }
+to {
+    opacity: 1;
+}
 `;
 
 const PStyled = styled.p`
   font-weight: 700;
 `;
 
-function useIsVisible(ref: RefObject<HTMLElement>, rootMargin = "0px") {
-  const [isVisible, setIsVisible] = useState(false);
+type ImageProps = {
+  width: string;
+  height: string;
+  src: string;
+  alt: string;
+};
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
-      { rootMargin },
-    );
-
-    const copy = ref.current;
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => {
-      observer.unobserve(copy!);
-    };
-  }, [ref, rootMargin]);
-
-  return isVisible;
-}
+const companyLogos: ImageProps[] = [
+  {
+    width: "160",
+    height: "55",
+    src: "https://res.cloudinary.com/djxpd9whf/image/upload/v1629969063/hifly/logos/logo3_180x_gmwkoo.webp",
+    alt: "example logo 1",
+  },
+  {
+    width: "160",
+    height: "23",
+    src: "https://res.cloudinary.com/djxpd9whf/image/upload/v1629969063/hifly/logos/logo2_180x_kjfpic.webp",
+    alt: "example logo 2",
+  },
+  {
+    width: "160",
+    height: "111",
+    src: "https://res.cloudinary.com/djxpd9whf/image/upload/v1629969063/hifly/logos/logo4_180x_gbg9eq.webp",
+    alt: "example logo 1",
+  },
+  {
+    width: "160",
+    height: "73",
+    src: "https://res.cloudinary.com/djxpd9whf/image/upload/v1629969063/hifly/logos/logo1_180x_bgj6ha.webp",
+    alt: "example logo 1",
+  },
+];
 
 const Home: NextPage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -65,7 +73,6 @@ const Home: NextPage = () => {
   const isSectionVisible = useIsVisible(divRef);
 
   if (isSectionVisible && divRef.current) {
-    console.log(divRef.current.style.opacity);
     divRef.current.style.opacity = "1";
   }
 
@@ -75,44 +82,11 @@ const Home: NextPage = () => {
 
   return (
     <main>
-      <Dialog
-        isOpen={showModal}
-        onDismiss={closeModal}
-        aria-label="youtube video"
-        css={{
-          zIndex: 200,
-          height: "500px",
-          width: "100%",
-          maxWidth: "900px",
-          position: "relative",
-          padding: "3rem 0",
-
-          [mq.mq_100]: {
-            paddingLeft: "1rem",
-            paddingRight: "1rem",
-          },
-        }}
+      <Modal
+        showModal={showModal}
+        closeModal={closeModal}
+        ariaLabel="youtube video"
       >
-        <IconButtonStyled
-          css={{ position: "absolute", top: "5px", right: "5px" }}
-          onClick={closeModal}
-        >
-          <VisuallyHidden>Close modal</VisuallyHidden>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </IconButtonStyled>
         <iframe
           css={{
             width: "100%",
@@ -121,7 +95,8 @@ const Home: NextPage = () => {
           src="https://www.youtube.com/embed/s7nNOrYx6N8?autohide=0&autoplay=0"
           allowFullScreen
         ></iframe>
-      </Dialog>
+      </Modal>
+
       <section
         css={{
           height: "350px",
@@ -223,49 +198,21 @@ const Home: NextPage = () => {
           marginBottom: "5rem",
         }}
       >
-        <Image
-          width="160"
-          height="55"
-          src="https://res.cloudinary.com/djxpd9whf/image/upload/v1629969063/hifly/logos/logo3_180x_gmwkoo.webp"
-          alt="example logo 1"
-          css={{
-            opacity: 0,
-            animation,
-          }}
-        />
-        <Image
-          width="160"
-          height="23"
-          src="https://res.cloudinary.com/djxpd9whf/image/upload/v1629969063/hifly/logos/logo2_180x_kjfpic.webp"
-          alt="example logo 2"
-          css={{
-            opacity: 0,
-            animation,
-            animationDelay: `${animationDuration * 0.3}s`,
-          }}
-        />
-        <Image
-          width="160"
-          height="111"
-          src="https://res.cloudinary.com/djxpd9whf/image/upload/v1629969063/hifly/logos/logo4_180x_gbg9eq.webp"
-          alt="example logo 1"
-          css={{
-            opacity: 0,
-            animation,
-            animationDelay: `${animationDuration * 0.6}s`,
-          }}
-        />
-        <Image
-          width="160"
-          height="73"
-          src="https://res.cloudinary.com/djxpd9whf/image/upload/v1629969063/hifly/logos/logo1_180x_bgj6ha.webp"
-          alt="example logo 1"
-          css={{
-            opacity: 0,
-            animation,
-            animationDelay: `${animationDuration * 0.9}s`,
-          }}
-        />
+        {companyLogos.map(({ width, height, alt, src }, index) => (
+          <Image
+            width={width}
+            height={height}
+            alt={alt}
+            src={src}
+            key={src}
+            css={{
+              opacity: 0,
+              animation,
+              animationDelay:
+                index > 0 ? `${animationDuration * (0.3 * index)}s` : "",
+            }}
+          />
+        ))}
       </ContainerStyled>
       <section>
         <ContainerStyled
