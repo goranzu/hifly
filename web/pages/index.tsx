@@ -2,17 +2,19 @@
 
 import { useRef, useState } from "react";
 import styled from "@emotion/styled";
-import type { NextPage } from "next";
+import type { GetStaticProps } from "next";
 import Image from "next/image";
 import * as mq from "../styles/mq";
 import * as colors from "../styles/colors";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
+import { getPlaiceholder } from "plaiceholder";
 
 import "swiper/css";
 import "swiper/css/pagination";
 import "@reach/dialog/styles.css";
 
+import KitchenImage from "../public/images/kitchen_2400x.jpg";
 import ContainerStyled from "../components/styled/ContainerStyled";
 import Testimonial from "../components/Testimonial";
 import useIsVisible from "../lib/hooks/useIsVisible";
@@ -24,7 +26,27 @@ const PStyled = styled.p`
   font-weight: 700;
 `;
 
-const Home: NextPage = () => {
+export const getStaticProps: GetStaticProps = async () => {
+  const { base64, img } = await getPlaiceholder(
+    "https://res.cloudinary.com/djxpd9whf/image/upload/v1631297939/hifly/images/kitchen_2400x_pbxalg.webp",
+  );
+  //   const { css, img } = await getPlaiceholder("images/kitchen_2400x.jpg");
+
+  return {
+    props: {
+      imageProps: {
+        ...img,
+        blurDataURL: base64,
+      },
+    },
+  };
+};
+
+const Home = ({
+  imageProps,
+}: {
+  imageProps: { img: any; blurDataURL: string };
+}) => {
   const [showModal, setShowModal] = useState(false);
   const divRef = useRef<HTMLDivElement>(null);
 
@@ -353,17 +375,25 @@ const Home: NextPage = () => {
           marginTop: "3rem",
           position: "relative",
           height: "600px",
-          //   [mq.mq_100]: { height: "600px" },
         }}
       >
-        {/* <div> */}
-        <Image
-          src="/images/kitchen_2400x.jpg"
+        {/* <Image
           alt="kitchen"
           layout="fill"
           css={{
             objectFit: "cover",
           }}
+          {...imageProps}
+          placeholder="blur"
+        /> */}
+        <Image
+          src={KitchenImage}
+          alt="kitchen"
+          layout="fill"
+          css={{
+            objectFit: "cover",
+          }}
+          placeholder="blur"
         />
         {/* </div> */}
         <div
